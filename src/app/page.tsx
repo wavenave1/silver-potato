@@ -58,7 +58,7 @@ export default function Dashboard() {
     <div className="p-8">
       <div className="animate-pulse space-y-4">
         <div className="h-8 bg-gray-200 rounded w-48" />
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {[...Array(6)].map((_, i) => <div key={i} className="h-28 bg-gray-200 rounded-xl" />)}
         </div>
       </div>
@@ -68,13 +68,13 @@ export default function Dashboard() {
   const maxArr = Math.max(...STAGES.map(s => data.stageCounts[s]?.arr ?? 0), 1);
 
   return (
-    <div className="p-8 max-w-7xl">
+    <div className="p-4 md:p-8 max-w-7xl">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Sales Dashboard</h1>
         <p className="text-gray-500 mt-1">Your pipeline at a glance</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
         <StatCard label="Total ARR" value={formatCurrency(data.totalArr)} icon={DollarSign} color="bg-emerald-500" href="/accounts" />
         <StatCard label="Weighted Pipeline" value={formatCurrency(data.pipelineArr)} icon={TrendingUp} color="bg-indigo-500" href="/opportunities" />
         <StatCard label="Active Opportunities" value={String(data.activeOpps)} icon={Trophy} color="bg-blue-500" href="/opportunities" />
@@ -89,7 +89,7 @@ export default function Dashboard() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <Card>
           <CardHeader>
             <h2 className="font-semibold text-gray-900">Pipeline by Stage</h2>

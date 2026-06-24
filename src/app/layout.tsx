@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geist.className} bg-gray-50 antialiased`}>
         <div className="flex min-h-screen">
           <Sidebar />
-          <main className="flex-1 overflow-auto">{children}</main>
+          <main className="flex-1 overflow-auto pt-12 md:pt-0">{children}</main>
         </div>
       </body>
     </html>

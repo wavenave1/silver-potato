@@ -90,7 +90,7 @@ export default function PipelinePage() {
   const totalByStage = (stage: string) => stageMap[stage].reduce((s, o) => s + (o.arr ?? 0), 0);
 
   return (
-    <div className="p-6 h-screen flex flex-col">
+    <div className="p-4 md:p-6 h-[calc(100vh-3rem)] md:h-screen flex flex-col">
       <div className="mb-5 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Pipeline</h1>

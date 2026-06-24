@@ -75,7 +75,7 @@ export default function AccountDetailPage() {
   const days = daysUntil(account.renewalDate);
 
   return (
-    <div className="p-8 max-w-6xl">
+    <div className="p-4 md:p-8 max-w-6xl">
       <div className="flex items-center gap-3 mb-6">
         <Link href="/accounts" className="text-gray-400 hover:text-gray-600"><ArrowLeft size={20} /></Link>
         <h1 className="text-2xl font-bold text-gray-900">{account.name}</h1>
@@ -95,12 +95,12 @@ export default function AccountDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-6">
-        <Card className="col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
+        <Card className="md:col-span-2">
           <CardHeader><h2 className="font-semibold text-gray-800">Account Details</h2></CardHeader>
           <CardContent>
             {editing ? (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input label="Name" value={editForm.name ?? ""} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))} />
                 <Input label="Domain" value={editForm.domain ?? ""} onChange={e => setEditForm(f => ({ ...f, domain: e.target.value }))} />
                 <Input label="Industry" value={editForm.industry ?? ""} onChange={e => setEditForm(f => ({ ...f, industry: e.target.value }))} />
@@ -169,7 +169,7 @@ export default function AccountDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">

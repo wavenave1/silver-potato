@@ -106,7 +106,7 @@ export default function ContactDetailPage() {
   ];
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-4 md:p-8 max-w-5xl">
       <div className="flex items-center gap-3 mb-6">
         <Link href="/contacts" className="text-gray-400 hover:text-gray-600"><ArrowLeft size={20} /></Link>
         <div>
@@ -138,12 +138,12 @@ export default function ContactDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        <Card className="col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <Card className="md:col-span-2">
           <CardHeader><h2 className="font-semibold text-gray-800">Contact Details</h2></CardHeader>
           <CardContent>
             {editing ? (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input label="First Name" value={form.firstName ?? ""} onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))} />
                 <Input label="Last Name" value={form.lastName ?? ""} onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))} />
                 <Input label="Title" value={form.title ?? ""} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} />

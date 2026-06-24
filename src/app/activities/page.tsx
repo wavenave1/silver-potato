@@ -67,7 +67,7 @@ export default function ActivitiesPage() {
   const accountMap = Object.fromEntries(accounts.map(a => [a.id, a.name]));
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-4 md:p-8 max-w-5xl">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Activities</h1>
@@ -83,7 +83,7 @@ export default function ActivitiesPage() {
               <h2 className="font-semibold text-gray-900">Log Activity</h2>
               <button onClick={() => setShowForm(false)}><X size={18} className="text-gray-400 hover:text-gray-600" /></button>
             </div>
-            <form onSubmit={submit} className="grid grid-cols-2 gap-4">
+            <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Select label="Type" options={TYPE_OPTIONS} value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} />
               <Select label="Account" options={accountOptions} value={form.accountId} onChange={e => setForm(f => ({ ...f, accountId: e.target.value }))} />
               <div className="col-span-2">

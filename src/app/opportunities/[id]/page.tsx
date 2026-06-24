@@ -121,7 +121,7 @@ export default function OpportunityDetailPage() {
   const scoreColor = score >= 70 ? "text-green-600" : score >= 40 ? "text-yellow-600" : "text-red-500";
 
   return (
-    <div className="p-8 max-w-6xl">
+    <div className="p-4 md:p-8 max-w-6xl">
       <div className="flex items-center gap-3 mb-6">
         <Link href="/opportunities" className="text-gray-400 hover:text-gray-600"><ArrowLeft size={20} /></Link>
         <div>
@@ -144,12 +144,12 @@ export default function OpportunityDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-6">
-        <Card className="col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
+        <Card className="md:col-span-2">
           <CardHeader><h2 className="font-semibold text-gray-800">Deal Details</h2></CardHeader>
           <CardContent>
             {editing ? (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input label="Name" value={form.name ?? ""} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
                 <Select label="Type" options={TYPE_OPTIONS} value={form.type ?? "new_logo"} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} />
                 <Select label="Stage" options={STAGE_OPTIONS} value={form.stage ?? "discovery"} onChange={e => {
@@ -261,7 +261,7 @@ export default function OpportunityDetailPage() {
       <Card>
         <CardHeader><h2 className="font-semibold text-gray-800">Deal Qualification</h2></CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {QUAL_FIELDS.map(({ key, label, hint }) => (
               <div key={key}>
                 {editing ? (

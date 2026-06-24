@@ -70,8 +70,8 @@ export default function OpportunitiesPage() {
   const stageOptions = OPPORTUNITY_STAGES.map(s => ({ value: s.value, label: s.label }));
 
   return (
-    <div className="p-8 max-w-7xl">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-4 md:p-8 max-w-7xl">
+      <div className="flex flex-wrap items-start md:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Opportunities</h1>
           <p className="text-gray-500 mt-0.5">{opps.length} deals · {formatCurrency(totalArr)} pipeline · {formatCurrency(weightedArr)} weighted</p>
@@ -99,7 +99,7 @@ export default function OpportunitiesPage() {
               <h2 className="font-semibold text-gray-900">New Opportunity</h2>
               <button onClick={() => setShowForm(false)}><X size={18} className="text-gray-400 hover:text-gray-600" /></button>
             </div>
-            <form onSubmit={submit} className="grid grid-cols-2 gap-4">
+            <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input label="Opportunity Name *" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
               <Select label="Account" options={accountOptions} value={form.accountId} onChange={e => setForm(f => ({ ...f, accountId: e.target.value }))} />
               <Select label="Type" options={TYPE_OPTIONS} value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} />
@@ -120,8 +120,8 @@ export default function OpportunitiesPage() {
         </Card>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-        <table className="w-full text-sm">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
               <th className="text-left px-4 py-3 font-medium text-gray-600">Opportunity</th>
