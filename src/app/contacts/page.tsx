@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Select, Textarea } from "@/components/ui/input";
 import { CONTACT_ROLES } from "@/lib/utils";
 import { Plus, X, Mail, Phone } from "lucide-react";
+import Link from "next/link";
 
 type Contact = {
   id: string; accountId: string | null; firstName: string; lastName: string;
@@ -138,8 +139,10 @@ export default function ContactsPage() {
             {filtered.map(c => (
               <tr key={c.id} className="hover:bg-gray-50 transition-colors">
                 <td className="px-4 py-3">
-                  <p className="font-medium text-gray-900">{c.firstName} {c.lastName}</p>
-                  {c.title && <p className="text-xs text-gray-400">{c.title}</p>}
+                  <Link href={`/contacts/${c.id}`} className="hover:text-indigo-600">
+                    <p className="font-medium text-gray-900">{c.firstName} {c.lastName}</p>
+                    {c.title && <p className="text-xs text-gray-400">{c.title}</p>}
+                  </Link>
                 </td>
                 <td className="px-4 py-3 text-gray-600">{c.accountId ? accountMap[c.accountId] ?? "—" : "—"}</td>
                 <td className="px-4 py-3">

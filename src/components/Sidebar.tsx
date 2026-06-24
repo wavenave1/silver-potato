@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, Users, TrendingUp, Activity, LayoutDashboard, Zap } from "lucide-react";
+import { Building2, Users, TrendingUp, Activity, LayoutDashboard, Zap, Kanban } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const nav = [
@@ -9,6 +9,7 @@ const nav = [
   { href: "/accounts", label: "Accounts", icon: Building2 },
   { href: "/contacts", label: "Contacts", icon: Users },
   { href: "/opportunities", label: "Opportunities", icon: TrendingUp },
+  { href: "/pipeline", label: "Pipeline", icon: Kanban },
   { href: "/activities", label: "Activities", icon: Activity },
 ];
 

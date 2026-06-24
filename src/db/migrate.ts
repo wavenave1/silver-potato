@@ -64,6 +64,13 @@ sqlite.exec(`
     updated_at TEXT NOT NULL
   );
 
+  CREATE TABLE IF NOT EXISTS opportunity_contacts (
+    opportunity_id TEXT NOT NULL REFERENCES opportunities(id) ON DELETE CASCADE,
+    contact_id TEXT NOT NULL REFERENCES contacts(id) ON DELETE CASCADE,
+    created_at TEXT NOT NULL,
+    PRIMARY KEY (opportunity_id, contact_id)
+  );
+
   CREATE TABLE IF NOT EXISTS activities (
     id TEXT PRIMARY KEY,
     account_id TEXT REFERENCES accounts(id),

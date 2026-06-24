@@ -58,6 +58,12 @@ export const opportunities = sqliteTable("opportunities", {
   updatedAt: text("updated_at").notNull(),
 });
 
+export const opportunityContacts = sqliteTable("opportunity_contacts", {
+  opportunityId: text("opportunity_id").notNull().references(() => opportunities.id),
+  contactId: text("contact_id").notNull().references(() => contacts.id),
+  createdAt: text("created_at").notNull(),
+});
+
 export const activities = sqliteTable("activities", {
   id: text("id").primaryKey(),
   accountId: text("account_id").references(() => accounts.id),

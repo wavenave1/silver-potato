@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Select, Textarea } from "@/components/ui/input";
 import { formatCurrency, formatDate, STAGE_COLORS, OPPORTUNITY_STAGES } from "@/lib/utils";
-import { ArrowLeft, Pencil, Check, Trash2 } from "lucide-react";
+import { ArrowLeft, Pencil, Check, Trash2, Plus, X, Users } from "lucide-react";
 import Link from "next/link";
 
 type Opp = {
@@ -18,6 +18,13 @@ type Opp = {
 };
 
 type Account = { id: string; name: string };
+type Contact = { id: string; firstName: string; lastName: string; title: string | null; role: string | null };
+
+const ROLE_COLORS: Record<string, string> = {
+  economic_buyer: "bg-purple-100 text-purple-700", champion: "bg-green-100 text-green-700",
+  technical_buyer: "bg-blue-100 text-blue-700", blocker: "bg-red-100 text-red-700",
+  end_user: "bg-gray-100 text-gray-600", influencer: "bg-yellow-100 text-yellow-700",
+};
 
 const TYPE_OPTIONS = [
   { value: "new_logo", label: "New Logo" },
@@ -51,11 +58,16 @@ export default function OpportunityDetailPage() {
   const [account, setAccount] = useState<Account | null>(null);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState<Partial<Opp>>({});
+  const [linkedContacts, setLinkedContacts] = useState<Contact[]>([]);
+  const [allContacts, setAllContacts] = useState<Contact[]>([]);
+  const [showLinkContact, setShowLinkContact] = useState(false);
+  const [linkContactId, setLinkContactId] = useState("");
+
+  const loadLinkedContacts = () =>
+    fetch(`/api/opportunities/${id}/contacts`).then(r => r.json()).then(setLinkedContacts);
 
   const load = async () => {
-    const [oppData] = await Promise.all([
-      fetch(`/api/opportunities/${id}`).then(r => r.json()),
-    ]);
+    const oppData: Opp = await fetch(`/api/opportunities/${id}`).then(r => r.json());
     setOpp(oppData);
     setForm(oppData);
     if (oppData.accountId) {
@@ -63,7 +75,29 @@ export default function OpportunityDetailPage() {
     }
   };
 
-  useEffect(() => { load(); }, [id]);
+  useEffect(() => { load(); loadLinkedContacts(); }, [id]);
+  useEffect(() => { fetch("/api/contacts").then(r => r.json()).then(setAllContacts); }, []);
+
+  const linkContact = async () => {
+    if (!linkContactId) return;
+    await fetch(`/api/opportunities/${id}/contacts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contactId: linkContactId }),
+    });
+    setShowLinkContact(false);
+    setLinkContactId("");
+    loadLinkedContacts();
+  };
+
+  const unlinkContact = async (contactId: string) => {
+    await fetch(`/api/opportunities/${id}/contacts`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contactId }),
+    });
+    loadLinkedContacts();
+  };
 
   const save = async () => {
     await fetch(`/api/opportunities/${id}`, {
@@ -164,6 +198,61 @@ export default function OpportunityDetailPage() {
             <CardContent className="pt-4">
               <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Weighted Value</p>
               <p className="text-2xl font-bold text-indigo-600 mt-1">{formatCurrency((opp.arr ?? 0) * ((opp.probability ?? 0) / 100))}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Users size={14} className="text-gray-500" />
+                  <h3 className="font-semibold text-gray-800 text-sm">Stakeholders</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => setShowLinkContact(v => !v)}><Plus size={13} /></Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {showLinkContact && (
+                <div className="mb-3 pb-3 border-b border-gray-100 space-y-2">
+                  <Select
+                    options={[
+                      { value: "", label: "— Select contact —" },
+                      ...allContacts.filter(c => !linkedContacts.find(l => l.id === c.id))
+                        .map(c => ({ value: c.id, label: `${c.firstName} ${c.lastName}` })),
+                    ]}
+                    value={linkContactId}
+                    onChange={e => setLinkContactId(e.target.value)}
+                  />
+                  <div className="flex gap-2">
+                    <Button size="sm" onClick={linkContact} disabled={!linkContactId}>Link</Button>
+                    <Button size="sm" variant="ghost" onClick={() => setShowLinkContact(false)}>Cancel</Button>
+                  </div>
+                </div>
+              )}
+              {linkedContacts.length === 0 ? (
+                <p className="text-xs text-gray-400">No stakeholders linked.</p>
+              ) : (
+                <div className="space-y-2">
+                  {linkedContacts.map(c => (
+                    <div key={c.id} className="flex items-center gap-2">
+                      <div className="flex-1 min-w-0">
+                        <Link href={`/contacts/${c.id}`} className="text-sm font-medium text-gray-800 hover:text-indigo-600">
+                          {c.firstName} {c.lastName}
+                        </Link>
+                        {c.role && (
+                          <span className={`ml-2 inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium ${ROLE_COLORS[c.role] ?? "bg-gray-100 text-gray-600"}`}>
+                            {c.role.replace(/_/g, " ")}
+                          </span>
+                        )}
+                        {c.title && <p className="text-xs text-gray-400">{c.title}</p>}
+                      </div>
+                      <button onClick={() => unlinkContact(c.id)} className="text-gray-200 hover:text-red-500">
+                        <X size={13} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
