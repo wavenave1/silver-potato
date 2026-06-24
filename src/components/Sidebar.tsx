@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, Users, TrendingUp, Activity, LayoutDashboard, Zap, Kanban, Menu, X } from "lucide-react";
+import { Building2, Users, TrendingUp, Activity, LayoutDashboard, Zap, Kanban, Menu, X, ArrowLeftRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -12,6 +12,7 @@ const nav = [
   { href: "/opportunities", label: "Opportunities", icon: TrendingUp },
   { href: "/pipeline", label: "Pipeline", icon: Kanban },
   { href: "/activities", label: "Activities", icon: Activity },
+  { href: "/import", label: "Import / Export", icon: ArrowLeftRight },
 ];
 
 export function Sidebar() {
